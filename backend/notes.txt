@@ -1,0 +1,57 @@
+to create package.json -> 
+
+npm init -y 
+
+
+npm install express mongoose dotenv nodemon
+
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+
+
+
+  encrypt password 
+
+  -> cryptojs
+
+
+
+  ------------------------------------------login ------------------------------------------------------------------------------------
+
+router.post("/login",async (req,res)=>{
+
+      try{
+
+          const user = await User.findOne({username : req.body.username} );
+          !user && res.status(401).json("wrong cred");
+
+// two methods 
+------------------------------------------------------------------------------------
+          const hashedPass = CryptoJS.AES.decrypt(user.password, process.env.PASS_KEY);
+------------------------------------------------------------------------------------
+          console.log(hashedPass);
+        
+------------------------------------------------------------------------------------
+        const OriginalPassword = hashedPass.toString(CryptoJS.enc.Utf8); //its enc wasted my time
+------------------------------------------------------------------------------------
+          console.log(OriginalPassword);
+          
+        OriginalPassword != req.body.password && res.status(401).json("wrong pass");    
+
+          res.status(200).json("suc")
+          
+        }catch(err){
+        console.log(err);
+      }
+
+
+
+})
+
+------------------------------------------------------------------------------------
+
+npm i jsonwebtoken
+
+
